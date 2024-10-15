@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carmen Coverage</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    
+    <link rel="stylesheet" href="carmen_style.css"> <!-- Linking the custom CSS file -->
+</head>
+<body>
+    <div class="main-container">
+        <div class="left-panel">
+            <h2>Coverage Search</h2>
+            <label for="latitude">Latitude:</label>
+            <input type="text" id="latitude" name="latitude" placeholder="Enter Latitude">
+
+            <label for="longitude">Longitude:</label>
+            <input type="text" id="longitude" name="longitude" placeholder="Enter Longitude">
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" placeholder="Enter Address">
+
+            <label for="medium">Connection Medium:</label>
+            <select id="medium">
+                <option value="all">All</option>
+                <option value="microwave">Microwave</option>
+                <option value="fibre">Fibre</option>
+                <option value="lte">LTE</option>
+                <option value="5g">5G</option>
+                <option value="4g">4G</option>
+            </select>
+
+            <button id="filterBtn" class="filter-button">Filter</button>
+
+            <div id="result" class="results-container">
+                <!-- Filtered Results will be shown here -->
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div id="map" class="map-container"></div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Custom JS Script -->
+    <script src="carmen_coverage_v3.js"></script> <!-- Linking the custom JS file -->
+    
+    <!-- Map Initialization Script -->
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([-25.7479, 28.2293], 13); // Default view: Pretoria, South Africa
+
+        // Add the OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add WMS layer from GeoServer (ensure the workspace:layer_name is correct)
+        L.tileLayer.wms("http://localhost:8080/geoserver/wms", {
+            layers: 'tiger:nyc',  // Replace with your workspace and layer name
+            format: 'image/png',
+            transparent: true,
+            attribution: "GeoServer"
+        }).addTo(map);
+
+        // Add a marker at the default location
+        var marker = L.marker([-25.7479, 28.2293]).addTo(map);
+
+        // Add a custom north arrow to the map
+        var north = L.control({ position: 'bottomleft' });
+        north.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'north-arrow');
+            div.innerHTML = '<img src="https://www.maptools.com/images/maps/north_arrow.png" style="width:50px;">';
+            return div;
+        };
+        north.addTo(map);
+
+        // Add layer control to switch between base layers (optional)
+        var baseLayers = {
+            "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            })
+        };
+        L.control.layers(baseLayers).addTo(map);
+    </script>
+</body>
+</html>

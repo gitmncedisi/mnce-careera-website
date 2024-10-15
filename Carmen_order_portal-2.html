@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Portal</title>
+    <link rel="stylesheet" href="portal_style.css"> <!-- Link to your CSS -->
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <h2 id="pageTitle">Order Placement</h2> <!-- Dynamic title based on user navigation -->
+        <button id="userInfoBtn">User Info</button>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <h3>Order Fulfillment</h3>
+        <ul>
+            <li><button onclick="navigate('orderPlacement')">Order Placement</button></li>
+            <li><button onclick="navigate('orderRelocation')">Order Relocation</button></li>
+            <li><button onclick="navigate('orderCancellation')">Order Cancellation</button></li>
+            <li><button onclick="navigate('orderChange')">Order Change</button></li>
+        </ul>
+
+        <!-- Submenu for Order Change -->
+        <div id="orderChangeSubmenu" style="display:none;">
+            <ul>
+                <li><button onclick="navigate('upgrade')">Upgrade</button></li>
+                <li><button onclick="navigate('downgrade')">Downgrade</button></li>
+                <li><button onclick="navigate('addService')">Add Additional Service</button></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <div id="orderPlacementForm" class="form-section" style="display: block;">
+            <h3>Order Placement Form</h3>
+            <!-- Order Placement Form -->
+            <form>
+                <!-- Add the form fields here for order placement -->
+                <label for="orderId">Order ID:</label>
+                <input type="text" id="orderId" name="orderId" value="12345" readonly>
+
+                <label for="product">Product:</label>
+                <select id="product">
+                    <option value="fibre">Fibre</option>
+                    <option value="lte">LTE</option>
+                </select>
+
+                <label for="price">Price:</label>
+                <input type="text" id="price" name="price">
+
+                <label for="speed">Speed:</label>
+                <input type="text" id="speed" name="speed">
+
+                <!-- Submit Button -->
+                <button type="submit">Submit Order</button>
+            </form>
+        </div>
+
+        <div id="orderRelocationForm" class="form-section" style="display: none;">
+            <h3>Order Relocation Form</h3>
+            <!-- Relocation form fields -->
+        </div>
+
+        <div id="orderCancellationForm" class="form-section" style="display: none;">
+            <h3>Order Cancellation Form</h3>
+            <!-- Cancellation form fields -->
+        </div>
+
+        <div id="orderChangeForm" class="form-section" style="display: none;">
+            <h3>Order Change Form</h3>
+            <!-- Change (upgrade/downgrade/add service) form fields -->
+        </div>
+    </div>
+
+    <!-- Billing Section -->
+    <div class="billing-section">
+        <h3>Billing Information</h3>
+        <p>Order ID: <span id="billingOrderId">12345</span></p>
+        <p>Total Paid: <span id="totalPaid">$500</span></p>
+        <p>Outstanding Payments: <span id="outstandingPayments">$100</span></p>
+        <p>Connection Status: <span id="connectionStatus">Active</span></p>
+    </div>
+
+    <script src="portal_script.js"></script> <!-- Link to your JS -->
+</body>
+</html>
